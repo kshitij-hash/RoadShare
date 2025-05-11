@@ -1,16 +1,16 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import HomeScreen from '../../screens/HomeScreen';
+import DashboardScreen from '../../screens/DashboardScreen';
 
-function Home() {
+function Dashboard() {
   return (
     <View style={styles.container}>
-      <HomeScreen />
+      <DashboardScreen />
     </View>
   );
 }
 
-export default Home;
+export default Dashboard;
 
 const styles = StyleSheet.create({
   container: {

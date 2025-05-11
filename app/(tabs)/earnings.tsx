@@ -1,16 +1,16 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import HomeScreen from '../../screens/HomeScreen';
+import EarningsScreen from '../../screens/EarningsScreen';
 
-function Home() {
+function Earnings() {
   return (
     <View style={styles.container}>
-      <HomeScreen />
+      <EarningsScreen />
     </View>
   );
 }
 
-export default Home;
+export default Earnings;
 
 const styles = StyleSheet.create({
   container: {

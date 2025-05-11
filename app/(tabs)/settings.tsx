@@ -1,16 +1,16 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import HomeScreen from '../../screens/HomeScreen';
+import SettingsScreen from '../../screens/SettingsScreen';
 
-function Home() {
+function Settings() {
   return (
     <View style={styles.container}>
-      <HomeScreen />
+      <SettingsScreen />
     </View>
   );
 }
 
-export default Home;
+export default Settings;
 
 const styles = StyleSheet.create({
   container: {

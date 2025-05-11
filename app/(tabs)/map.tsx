@@ -1,16 +1,16 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import HomeScreen from '../../screens/HomeScreen';
+import MapScreen from '../../screens/MapScreen';
 
-function Home() {
+function Map() {
   return (
     <View style={styles.container}>
-      <HomeScreen />
+      <MapScreen />
     </View>
   );
 }
 
-export default Home;
+export default Map;
 
 const styles = StyleSheet.create({
   container: {
