@@ -21,8 +21,9 @@ export default function RootLayout() {
   return (
     <DataProvider>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack initialRouteName="splash">
+          <Stack.Screen name="splash" options={{ headerShown: false, animation: 'fade' }} />
+          <Stack.Screen name="(tabs)" options={{ headerShown: false, animation: 'fade' }} />
           <Stack.Screen name="+not-found" />
         </Stack>
         <StatusBar style="auto" />

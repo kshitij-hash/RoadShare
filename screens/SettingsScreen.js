@@ -1,11 +1,15 @@
 import React, { useContext, useState } from 'react';
 import { StyleSheet, Text, View, Switch, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { DataContext } from '../context/DataContext';
+import { Colors } from '../constants/Colors';
+import { useColorScheme } from '../hooks/useColorScheme';
 
 export default function SettingsScreen() {
-  const { isSharing, toggleDataSharing } = useContext(DataContext);
+  const { isSharing, toggleDataSharing, resetEarnings } = useContext(DataContext);
+  const colorScheme = useColorScheme();
+  const colors = Colors[colorScheme ?? 'dark'];
   
-  // Settings state
+  // Settings state - only include working features
   const [settings, setSettings] = useState({
     shareSpeed: true,
     shareLocation: true,
@@ -13,8 +17,6 @@ export default function SettingsScreen() {
     shareDiagnostics: true,
     shareEngineTemp: true,
     dataFrequency: 'high', // high, medium, low
-    darkMode: true,
-    notifications: true,
   });
 
   // Toggle a boolean setting
@@ -52,143 +54,195 @@ export default function SettingsScreen() {
   };
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Data Sharing</Text>
+    <ScrollView style={[styles.container, { backgroundColor: colors.background }]}>
+      <View style={styles.header}>
+        <Text style={[styles.headerTitle, { color: colors.text }]}>Settings</Text>
+        <Text style={[styles.headerSubtitle, { color: colors.icon }]}>Customize your data sharing preferences</Text>
+      </View>
+      
+      <View style={[styles.section, { backgroundColor: colors.card, shadowColor: colors.shadow }]}>
+        <Text style={[styles.sectionTitle, { color: colors.text }]}>Data Sharing</Text>
         
-        <View style={styles.settingRow}>
-          <Text style={styles.settingLabel}>Enable Data Sharing</Text>
+        <View style={[styles.settingRow, { borderBottomColor: colors.border }]}>
+          <View>
+            <Text style={[styles.settingLabel, { color: colors.text }]}>Enable Data Sharing</Text>
+            <Text style={[styles.settingDescription, { color: colors.icon }]}>Turn on to start earning rewards</Text>
+          </View>
           <Switch
             value={isSharing}
             onValueChange={toggleDataSharing}
-            trackColor={{ false: '#767577', true: '#4CAF50' }}
+            trackColor={{ false: '#767577', true: colors.success }}
             thumbColor={isSharing ? '#FFFFFF' : '#f4f3f4'}
+            ios_backgroundColor="#3e3e3e"
           />
         </View>
         
-        <View style={styles.settingRow}>
-          <Text style={styles.settingLabel}>Share Speed Data</Text>
+        <View style={[styles.settingRow, { borderBottomColor: colors.border }]}>
+          <View>
+            <Text style={[styles.settingLabel, { color: colors.text }]}>Share Speed Data</Text>
+            <Text style={[styles.settingDescription, { color: colors.icon }]}>Vehicle speed information</Text>
+          </View>
           <Switch
             value={settings.shareSpeed}
             onValueChange={() => toggleSetting('shareSpeed')}
-            trackColor={{ false: '#767577', true: '#4CAF50' }}
+            trackColor={{ false: '#767577', true: colors.success }}
             thumbColor={settings.shareSpeed ? '#FFFFFF' : '#f4f3f4'}
+            ios_backgroundColor="#3e3e3e"
           />
         </View>
         
-        <View style={styles.settingRow}>
-          <Text style={styles.settingLabel}>Share Location Data</Text>
+        <View style={[styles.settingRow, { borderBottomColor: colors.border }]}>
+          <View>
+            <Text style={[styles.settingLabel, { color: colors.text }]}>Share Location Data</Text>
+            <Text style={[styles.settingDescription, { color: colors.icon }]}>GPS position tracking</Text>
+          </View>
           <Switch
             value={settings.shareLocation}
             onValueChange={() => toggleSetting('shareLocation')}
-            trackColor={{ false: '#767577', true: '#4CAF50' }}
+            trackColor={{ false: '#767577', true: colors.success }}
             thumbColor={settings.shareLocation ? '#FFFFFF' : '#f4f3f4'}
+            ios_backgroundColor="#3e3e3e"
           />
         </View>
         
-        <View style={styles.settingRow}>
-          <Text style={styles.settingLabel}>Share Fuel Data</Text>
+        <View style={[styles.settingRow, { borderBottomColor: colors.border }]}>
+          <View>
+            <Text style={[styles.settingLabel, { color: colors.text }]}>Share Fuel Data</Text>
+            <Text style={[styles.settingDescription, { color: colors.icon }]}>Fuel level and consumption</Text>
+          </View>
           <Switch
             value={settings.shareFuel}
             onValueChange={() => toggleSetting('shareFuel')}
-            trackColor={{ false: '#767577', true: '#4CAF50' }}
+            trackColor={{ false: '#767577', true: colors.success }}
             thumbColor={settings.shareFuel ? '#FFFFFF' : '#f4f3f4'}
+            ios_backgroundColor="#3e3e3e"
           />
         </View>
         
-        <View style={styles.settingRow}>
-          <Text style={styles.settingLabel}>Share Diagnostics</Text>
+        <View style={[styles.settingRow, { borderBottomColor: colors.border }]}>
+          <View>
+            <Text style={[styles.settingLabel, { color: colors.text }]}>Share Diagnostics</Text>
+            <Text style={[styles.settingDescription, { color: colors.icon }]}>Vehicle diagnostic codes</Text>
+          </View>
           <Switch
             value={settings.shareDiagnostics}
             onValueChange={() => toggleSetting('shareDiagnostics')}
-            trackColor={{ false: '#767577', true: '#4CAF50' }}
+            trackColor={{ false: '#767577', true: colors.success }}
             thumbColor={settings.shareDiagnostics ? '#FFFFFF' : '#f4f3f4'}
+            ios_backgroundColor="#3e3e3e"
           />
         </View>
         
         <View style={styles.settingRow}>
-          <Text style={styles.settingLabel}>Share Engine Temperature</Text>
+          <View>
+            <Text style={[styles.settingLabel, { color: colors.text }]}>Share Engine Temperature</Text>
+            <Text style={[styles.settingDescription, { color: colors.icon }]}>Engine thermal data</Text>
+          </View>
           <Switch
             value={settings.shareEngineTemp}
             onValueChange={() => toggleSetting('shareEngineTemp')}
-            trackColor={{ false: '#767577', true: '#4CAF50' }}
+            trackColor={{ false: '#767577', true: colors.success }}
             thumbColor={settings.shareEngineTemp ? '#FFFFFF' : '#f4f3f4'}
+            ios_backgroundColor="#3e3e3e"
           />
         </View>
       </View>
       
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Data Frequency</Text>
+      <View style={[styles.section, { backgroundColor: colors.card, shadowColor: colors.shadow }]}>
+        <Text style={[styles.sectionTitle, { color: colors.text }]}>Data Frequency</Text>
         
         <View style={styles.frequencyContainer}>
           <TouchableOpacity 
-            style={[styles.frequencyButton, settings.dataFrequency === 'low' && styles.activeFrequency]}
+            style={[
+              styles.frequencyButton, 
+              { backgroundColor: settings.dataFrequency === 'low' ? colors.tint + '20' : 'transparent' },
+              { borderColor: settings.dataFrequency === 'low' ? colors.tint : colors.border }
+            ]}
             onPress={() => setDataFrequency('low')}
           >
-            <Text style={[styles.frequencyText, settings.dataFrequency === 'low' && styles.activeFrequencyText]}>Low</Text>
-            <Text style={styles.frequencySubtext}>Every 5 min</Text>
+            <Text style={[
+              styles.frequencyText, 
+              { color: settings.dataFrequency === 'low' ? colors.tint : colors.text }
+            ]}>Low</Text>
+            <Text style={[styles.frequencySubtext, { color: colors.icon }]}>Every 5 min</Text>
           </TouchableOpacity>
           
           <TouchableOpacity 
-            style={[styles.frequencyButton, settings.dataFrequency === 'medium' && styles.activeFrequency]}
+            style={[
+              styles.frequencyButton, 
+              { backgroundColor: settings.dataFrequency === 'medium' ? colors.tint + '20' : 'transparent' },
+              { borderColor: settings.dataFrequency === 'medium' ? colors.tint : colors.border }
+            ]}
             onPress={() => setDataFrequency('medium')}
           >
-            <Text style={[styles.frequencyText, settings.dataFrequency === 'medium' && styles.activeFrequencyText]}>Medium</Text>
-            <Text style={styles.frequencySubtext}>Every 1 min</Text>
+            <Text style={[
+              styles.frequencyText, 
+              { color: settings.dataFrequency === 'medium' ? colors.tint : colors.text }
+            ]}>Medium</Text>
+            <Text style={[styles.frequencySubtext, { color: colors.icon }]}>Every 1 min</Text>
           </TouchableOpacity>
           
           <TouchableOpacity 
-            style={[styles.frequencyButton, settings.dataFrequency === 'high' && styles.activeFrequency]}
+            style={[
+              styles.frequencyButton, 
+              { backgroundColor: settings.dataFrequency === 'high' ? colors.tint + '20' : 'transparent' },
+              { borderColor: settings.dataFrequency === 'high' ? colors.tint : colors.border }
+            ]}
             onPress={() => setDataFrequency('high')}
           >
-            <Text style={[styles.frequencyText, settings.dataFrequency === 'high' && styles.activeFrequencyText]}>High</Text>
-            <Text style={styles.frequencySubtext}>Every 10 sec</Text>
+            <Text style={[
+              styles.frequencyText, 
+              { color: settings.dataFrequency === 'high' ? colors.tint : colors.text }
+            ]}>High</Text>
+            <Text style={[styles.frequencySubtext, { color: colors.icon }]}>Every 10 sec</Text>
           </TouchableOpacity>
         </View>
         
-        <Text style={styles.frequencyNote}>
+        <Text style={[styles.frequencyNote, { color: colors.icon }]}>
           Higher frequency provides more accurate data but uses more battery and data.
         </Text>
       </View>
       
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>App Settings</Text>
+      <View style={[styles.section, { backgroundColor: colors.card, shadowColor: colors.shadow }]}>
+        <Text style={[styles.sectionTitle, { color: colors.text }]}>Account</Text>
         
-        <View style={styles.settingRow}>
-          <Text style={styles.settingLabel}>Dark Mode</Text>
-          <Switch
-            value={settings.darkMode}
-            onValueChange={() => toggleSetting('darkMode')}
-            trackColor={{ false: '#767577', true: '#4CAF50' }}
-            thumbColor={settings.darkMode ? '#FFFFFF' : '#f4f3f4'}
-          />
-        </View>
-        
-        <View style={styles.settingRow}>
-          <Text style={styles.settingLabel}>Notifications</Text>
-          <Switch
-            value={settings.notifications}
-            onValueChange={() => toggleSetting('notifications')}
-            trackColor={{ false: '#767577', true: '#4CAF50' }}
-            thumbColor={settings.notifications ? '#FFFFFF' : '#f4f3f4'}
-          />
-        </View>
+        <TouchableOpacity 
+          style={[styles.actionButton, { backgroundColor: colors.error + '15', borderColor: colors.error }]}
+          onPress={() => {
+            Alert.alert(
+              'Reset Earnings',
+              'Are you sure you want to reset your earnings? This cannot be undone.',
+              [
+                { text: 'Cancel', style: 'cancel' },
+                { text: 'Reset', style: 'destructive', onPress: resetEarnings }
+              ]
+            );
+          }}
+        >
+          <Text style={[styles.actionButtonText, { color: colors.error }]}>Reset Earnings</Text>
+        </TouchableOpacity>
       </View>
       
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Legal</Text>
+      <View style={[styles.section, { backgroundColor: colors.card, shadowColor: colors.shadow }]}>
+        <Text style={[styles.sectionTitle, { color: colors.text }]}>Legal</Text>
         
-        <TouchableOpacity style={styles.legalButton} onPress={showPrivacyPolicy}>
-          <Text style={styles.legalButtonText}>Privacy Policy</Text>
+        <TouchableOpacity 
+          style={[styles.legalButton, { borderBottomColor: colors.border }]} 
+          onPress={showPrivacyPolicy}
+        >
+          <Text style={[styles.legalButtonText, { color: colors.text }]}>Privacy Policy</Text>
         </TouchableOpacity>
         
-        <TouchableOpacity style={styles.legalButton} onPress={showTerms}>
-          <Text style={styles.legalButtonText}>Terms of Service</Text>
+        <TouchableOpacity 
+          style={styles.legalButton} 
+          onPress={showTerms}
+        >
+          <Text style={[styles.legalButtonText, { color: colors.text }]}>Terms of Service</Text>
         </TouchableOpacity>
       </View>
       
       <View style={styles.versionContainer}>
-        <Text style={styles.versionText}>CarData v1.0.0</Text>
+        <Text style={[styles.versionText, { color: colors.icon }]}>RoadShare v1.0.0</Text>
       </View>
     </ScrollView>
   );
@@ -197,17 +251,35 @@ export default function SettingsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1E1E1E',
+    padding: 0,
+  },
+  header: {
     padding: 20,
+    paddingTop: 60,
+    paddingBottom: 20,
+  },
+  headerTitle: {
+    fontSize: 34,
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
+  headerSubtitle: {
+    fontSize: 16,
   },
   section: {
-    marginBottom: 30,
+    borderRadius: 16,
+    padding: 20,
+    marginHorizontal: 20,
+    marginBottom: 20,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   sectionTitle: {
-    color: '#FFFFFF',
     fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 16,
+    marginBottom: 15,
   },
   settingRow: {
     flexDirection: 'row',
@@ -215,62 +287,66 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 12,
     borderBottomWidth: 1,
-    borderBottomColor: '#333333',
   },
   settingLabel: {
-    color: '#FFFFFF',
     fontSize: 16,
+    fontWeight: '500',
+    marginBottom: 4,
+  },
+  settingDescription: {
+    fontSize: 13,
   },
   frequencyContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 16,
+    marginBottom: 15,
   },
   frequencyButton: {
-    backgroundColor: '#2A2A2A',
-    borderRadius: 10,
-    padding: 16,
-    width: '31%',
+    flex: 1,
+    borderRadius: 12,
+    padding: 15,
     alignItems: 'center',
-  },
-  activeFrequency: {
-    backgroundColor: '#4CAF50',
+    marginHorizontal: 5,
+    borderWidth: 1,
   },
   frequencyText: {
-    color: '#FFFFFF',
     fontSize: 16,
     fontWeight: 'bold',
-    marginBottom: 4,
-  },
-  activeFrequencyText: {
-    color: '#FFFFFF',
+    marginBottom: 5,
   },
   frequencySubtext: {
-    color: '#BBBBBB',
     fontSize: 12,
   },
   frequencyNote: {
-    color: '#BBBBBB',
     fontSize: 14,
     fontStyle: 'italic',
-    marginTop: 8,
+    textAlign: 'center',
+    marginTop: 10,
+  },
+  actionButton: {
+    borderRadius: 12,
+    padding: 15,
+    alignItems: 'center',
+    marginTop: 10,
+    borderWidth: 1,
+  },
+  actionButtonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
   },
   legalButton: {
-    backgroundColor: '#2A2A2A',
-    borderRadius: 10,
-    padding: 16,
-    marginBottom: 12,
+    paddingVertical: 15,
+    borderBottomWidth: 1,
   },
   legalButtonText: {
-    color: '#FFFFFF',
     fontSize: 16,
   },
   versionContainer: {
     alignItems: 'center',
-    marginBottom: 20,
+    marginTop: 20,
+    marginBottom: 40,
   },
   versionText: {
-    color: '#888888',
     fontSize: 14,
   },
 });
