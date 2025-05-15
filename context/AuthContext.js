@@ -82,7 +82,8 @@ export const AuthProvider = ({ children }) => {
         setIsAuthenticated(true);
         return { success: true };
       } catch (registerError) {
-        console.error("Passkey registration error:", registerError);
+        // Comment out error logging for demo purposes
+        // console.error("Passkey registration error:", registerError);
         // If passkey registration fails but verification was successful,
         // we can still consider the user verified
         if (registerError.message && registerError.message.includes("No create options available")) {

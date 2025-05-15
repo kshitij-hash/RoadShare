@@ -1,4 +1,4 @@
-package com.getpara.example
+package com.getpara.example.expo
 
 import android.app.Application
 import android.content.res.Configuration

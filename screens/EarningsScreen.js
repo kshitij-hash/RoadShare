@@ -83,7 +83,7 @@ export default function EarningsScreen() {
 
         <LineChart
           data={getChartData()}
-          width={Dimensions.get('window').width - 40}
+          width={Dimensions.get('window').width - 60}
           height={220}
           chartConfig={{
             backgroundColor: '#2A2A2A',

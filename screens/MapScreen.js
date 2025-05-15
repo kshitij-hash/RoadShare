@@ -1,8 +1,8 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Dimensions, SafeAreaView } from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import { Dimensions, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import MapView, { Marker, Polyline, PROVIDER_GOOGLE } from 'react-native-maps';
-import { DataContext } from '../context/DataContext';
 import { Colors } from '../constants/Colors';
+import { DataContext } from '../context/DataContext';
 import { useColorScheme } from '../hooks/useColorScheme';
 
 export default function MapScreen() {

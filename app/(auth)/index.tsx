@@ -1,19 +1,18 @@
 import React, { useState, useContext } from 'react';
-import { StyleSheet, ScrollView, View, ActivityIndicator } from 'react-native';
+import { StyleSheet, ScrollView, View, ActivityIndicator, KeyboardAvoidingView, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
-import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 
 import { AuthContext } from '../../context/AuthContext';
 import OTPVerificationComponent from '../../components/OTPVerificationComponent';
+import EmailInputComponent from '../../components/EmailInputComponent';
 import { randomTestEmail } from '../../utils/random';
 import { Colors } from '../../constants/Colors';
 import { ThemedText } from '../../components/ThemedText';
 import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
-import { Input } from '../../components/ui/Input';
 import { useColorScheme } from '../../hooks/useColorScheme';
 
 export default function AuthScreen() {
@@ -65,14 +64,18 @@ export default function AuthScreen() {
   return (
     <SafeAreaView style={styles.safeArea}>
       <StatusBar style="light" />
-      <ScrollView
-        contentContainerStyle={styles.scrollContainer}
-        keyboardShouldPersistTaps="handled">
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={{ flex: 1 }}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
+      >
+        <ScrollView
+          contentContainerStyle={styles.scrollContainer}
+          keyboardShouldPersistTaps="handled">
         
-        {/* Header with gradient */}
-        <LinearGradient
-          colors={[colors.background, colors.surface]}
-          style={styles.headerSection}
+        {/* Header section */}
+        <View
+          style={[styles.headerSection, { backgroundColor: colors.background }]}
         >
           <View style={styles.headerContent}>
             <View style={[styles.logoContainer, { backgroundColor: `${colors.tint}20` }]}>
@@ -85,7 +88,7 @@ export default function AuthScreen() {
               {showOTP ? 'Verify Your Account' : 'Welcome Back'}
             </ThemedText>
           </View>
-        </LinearGradient>
+        </View>
 
         <Card 
           variant="elevated" 
@@ -104,24 +107,10 @@ export default function AuthScreen() {
 
           {!showOTP ? (
             <View style={styles.formContainer}>
-              <Input
-                label="Email Address"
-                placeholder="Enter your email"
-                value={email}
-                onChangeText={setEmail}
-                keyboardType="email-address"
-                autoCapitalize="none"
-                leftIcon={<FontAwesome5 name="envelope" size={16} color={colors.icon} />}
-                containerStyle={styles.inputContainer}
-              />
-              
-              <Button
-                title={isLoading ? 'Loading...' : 'Continue'}
-                onPress={handleContinue}
-                disabled={!email || isLoading}
-                loading={isLoading}
-                fullWidth
-                style={styles.submitButton}
+              <EmailInputComponent
+                initialEmail={email}
+                setEmail={setEmail}
+                onContinue={handleContinue}
               />
             </View>
           ) : (
@@ -138,6 +127,7 @@ export default function AuthScreen() {
           </ThemedText>
         </View>
       </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }

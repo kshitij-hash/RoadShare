@@ -1,8 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useContext, useState } from 'react';
 import { Dimensions, KeyboardAvoidingView, Platform, SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
-import { Button, Input, Text } from 'react-native-elements';
+import { Text } from 'react-native-elements';
 import OTPVerificationComponent from '../components/OTPVerificationComponent';
+import EmailInputComponent from '../components/EmailInputComponent';
 import { Colors } from '../constants/Colors';
 import { AuthContext } from '../context/AuthContext';
 import { useColorScheme } from '../hooks/useColorScheme';
@@ -64,6 +65,7 @@ export default function AuthScreen({ navigation }) {
     <KeyboardAvoidingView 
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={{ flex: 1 }}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 40 : 0}
     >
       <SafeAreaView style={[styles.safeArea, { backgroundColor: colors.background }]}>
         <StatusBar style={colorScheme === 'dark' ? 'light-content' : 'dark-content'} />
@@ -96,32 +98,10 @@ export default function AuthScreen({ navigation }) {
 
             {!showOTP ? (
               <View style={styles.formContainer}>
-                <Input
-                  label="Email"
-                  placeholder="Enter your email address"
-                  value={email}
-                  onChangeText={setEmail}
-                  keyboardType="email-address"
-                  autoCapitalize="none"
-                  containerStyle={styles.inputContainer}
-                  inputContainerStyle={[styles.input, { borderColor: colors.border }]}
-                  inputStyle={[styles.inputText, { color: colors.text }]}
-                  labelStyle={[styles.inputLabel, { color: colors.text }]}
-                  maxLength={50}
-                  autoCorrect={false}
-                  spellCheck={false}
-                  placeholderTextColor={`${colors.text}80`}
-                />
-                <Button
-                  title="Continue"
-                  onPress={handleContinue}
-                  disabled={!email || isLoading}
-                  loading={isLoading}
-                  buttonStyle={[styles.button, { backgroundColor: colors.tint }]}
-                  containerStyle={styles.buttonContainer}
-                  titleStyle={styles.buttonText}
-                  disabledStyle={{ backgroundColor: colors.tint, opacity: 0.6 }}
-                  disabledTitleStyle={{ color: '#FFFFFF' }}
+                <EmailInputComponent
+                  initialEmail={email}
+                  setEmail={setEmail}
+                  onContinue={handleContinue}
                 />
               </View>
             ) : (
@@ -148,7 +128,7 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     flexGrow: 1,
-    paddingBottom: 30,
+    paddingBottom: 50,
     paddingHorizontal: 20,
   },
   header: {
@@ -205,14 +185,17 @@ const styles = StyleSheet.create({
   input: {
     borderWidth: 0,
     borderBottomWidth: 1,
-    paddingHorizontal: 8,
+    paddingHorizontal: 12,
     height: 48,
     backgroundColor: 'transparent',
     width: '100%',
+    borderRadius: 4,
   },
   inputText: {
     fontSize: 16,
     paddingLeft: 4,
+    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    fontWeight: '400',
   },
   inputLabel: {
     fontSize: 16,
