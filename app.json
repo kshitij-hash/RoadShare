@@ -9,14 +9,25 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.getpara.example",
+      "associatedDomains": [
+        "webcredentials:app.beta.usecapsule.com?mode=developer",
+        "webcredentials:app.usecapsule.com"
+      ]
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.getpara.example.expo",
+      "config": {
+        "googleMaps": {
+          "apiKey": "YOUR_API_KEY_HERE"
+        }
+      }
     },
     "web": {
       "bundler": "metro",

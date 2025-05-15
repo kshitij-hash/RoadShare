@@ -11,8 +11,11 @@ export default function HomeScreen() {
   const colorScheme = useColorScheme();
   const colors = Colors[colorScheme ?? 'dark'];
 
+
   return (
-    <ScrollView style={[styles.container, { backgroundColor: colors.background }]}>
+    <ScrollView 
+      style={[styles.container, { backgroundColor: colors.background }]}
+      showsVerticalScrollIndicator={false}>
       <StatusBar barStyle={colorScheme === 'dark' ? 'light-content' : 'dark-content'} />
       
       {/* Header with gradient */}
@@ -32,7 +35,7 @@ export default function HomeScreen() {
       <View style={[styles.earningsCard, { backgroundColor: colors.card, shadowColor: colors.shadow }]}>
         <View style={styles.earningsHeader}>
           <Text style={[styles.earningsTitle, { color: colors.text }]}>Total Earnings</Text>
-          <View style={[styles.statusPill, { backgroundColor: isSharing ? colors.success : colors.error }]}>
+          <View style={[styles.statusPill, { backgroundColor: isSharing ? '#4CAF50' : '#F44336' }]}>
             <Text style={styles.statusPillText}>{isSharing ? 'Active' : 'Inactive'}</Text>
           </View>
         </View>
@@ -40,7 +43,7 @@ export default function HomeScreen() {
           ${earnings.toFixed(4)}
         </Text>
         <TouchableOpacity 
-          style={[styles.sharingButton, { backgroundColor: isSharing ? colors.error : colors.success }]}
+          style={[styles.sharingButton, { backgroundColor: isSharing ? '#F44336' : '#4CAF50' }]}
           onPress={toggleDataSharing}
         >
           <Text style={styles.sharingButtonText}>
@@ -148,8 +151,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   earningsTitle: {
-    fontSize: 18,
-    fontWeight: '500',
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#212529',
   },
   statusPill: {
     paddingHorizontal: 12,
@@ -162,9 +166,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   earningsAmount: {
-    fontSize: 42,
+    fontSize: 36,
     fontWeight: 'bold',
-    marginBottom: 20,
+    marginVertical: 16,
+    color: '#212529',
   },
   sharingButton: {
     paddingVertical: 15,
@@ -182,6 +187,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginTop: 10,
     marginBottom: 15,
+    color: '#212529',
   },
   menuContainer: {
     flexDirection: 'row',
@@ -189,16 +195,17 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 20,
     marginBottom: 30,
+    width: '100%',
   },
   menuItem: {
     width: '48%',
     borderRadius: 16,
-    padding: 20,
+    padding: 16,
     marginBottom: 15,
+    elevation: 3,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    elevation: 3,
   },
   menuIcon: {
     width: 50,
@@ -215,9 +222,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     marginBottom: 4,
+    color: '#212529',
   },
   menuDescription: {
     fontSize: 12,
+    color: '#495057',
   },
   footer: {
     alignItems: 'center',
@@ -227,5 +236,6 @@ const styles = StyleSheet.create({
   footerText: {
     fontSize: 14,
     textAlign: 'center',
+    color: '#6c757d',
   },
 });

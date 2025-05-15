@@ -1,16 +1,17 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import { DarkTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-import { useColorScheme } from '@/hooks/useColorScheme';
 import { DataProvider } from '../context/DataContext';
+import { AuthProvider } from '../context/AuthContext';
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    // Add additional modern fonts if needed
   });
 
   if (!loaded) {
@@ -19,15 +20,24 @@ export default function RootLayout() {
   }
 
   return (
-    <DataProvider>
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <Stack initialRouteName="splash">
-          <Stack.Screen name="splash" options={{ headerShown: false, animation: 'fade' }} />
-          <Stack.Screen name="(tabs)" options={{ headerShown: false, animation: 'fade' }} />
-          <Stack.Screen name="+not-found" />
-        </Stack>
-        <StatusBar style="auto" />
-      </ThemeProvider>
-    </DataProvider>
+    <SafeAreaProvider>
+      <AuthProvider>
+        <DataProvider>
+          <ThemeProvider value={DarkTheme}>
+            <StatusBar style="light" />
+            <Stack initialRouteName="splash" screenOptions={{ 
+              headerShown: false,
+              animation: 'fade',
+              contentStyle: { backgroundColor: '#121212' } 
+            }}>
+              <Stack.Screen name="splash" options={{ animation: 'fade' }} />
+              <Stack.Screen name="(tabs)" options={{ animation: 'fade' }} />
+              <Stack.Screen name="(auth)" options={{ animation: 'fade' }} />
+              <Stack.Screen name="+not-found" />
+            </Stack>
+          </ThemeProvider>
+        </DataProvider>
+      </AuthProvider>
+    </SafeAreaProvider>
   );
 }
