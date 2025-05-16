@@ -6,6 +6,9 @@ RoadShare is a mobile application that demonstrates the potential of decentraliz
 
 Built for the DeCharge Network's DePIN for Car Data hackathon challenge, RoadShare aims to create a transparent ecosystem where vehicle owners can monetize their car's data while maintaining control over what is shared.
 
+## Quick Demo
+[demo video.webm](https://github.com/user-attachments/assets/8f2d8a3b-745c-45b3-9ed7-006da035eb98)
+
 ## Problem Statement
 
 Vehicles generate massive amounts of valuable data that currently benefits only manufacturers and service providers. RoadShare addresses this imbalance by:
