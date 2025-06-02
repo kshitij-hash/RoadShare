@@ -1,4 +1,4 @@
-# RoadShare: Car-as-a-Node Explorer 🚗💰
+# RoadShare: Car-as-a-Node Explorer on Solana 🚗💰
 
 ## Overview
 
